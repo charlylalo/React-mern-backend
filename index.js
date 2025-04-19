@@ -23,8 +23,9 @@ app.use(express.json())
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/events', require('./routes/events'))
 //TODO: CRUD
-app.get('/', (req, res) => {
-  res.send('Hola Mundo')
+
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'))
 })
 
 
