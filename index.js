@@ -1,8 +1,8 @@
 const express = require("express");
 const { dbConnection } = require("./db/config");
-require('dotenv').config();
-const cors = require('cors')
-const path = require('path')
+require("dotenv").config();
+const cors = require("cors");
+const path = require("path");
 
 //Crear el servidor express
 const app = express();
@@ -11,24 +11,27 @@ const app = express();
 dbConnection();
 
 // CORS
-app.use(cors()) // configuración de cors
+app.use(cors()); // configuración de cors
 
 //Directorio público
-app.use(express.static('public'))
+app.use(express.static("public"));
 
 // Lectura y parseo del body
-app.use(express.json())
-
+app.use(express.json());
 
 //Rutas
-app.use('/api/auth', require('./routes/auth'))
-app.use('/api/events', require('./routes/events'))
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/events", require("./routes/events"));
 //TODO: CRUD
 
-app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'))
-})
+// app.use('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'public/index.html'))
+// })
 
+// app.use("*", express.static(__dirname, 'public/index.html'));
+app.get("*", function (req, res) {
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 // Escuchar peticiones
 app.listen(process.env.PORT, () => {
